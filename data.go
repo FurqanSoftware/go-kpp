@@ -12,6 +12,8 @@ type TestData struct {
 	group *TestGroup
 	name  string
 
+	inputSize, answerSize int64
+
 	illusExt string
 }
 
@@ -27,8 +29,16 @@ func (d TestData) Input() (io.ReadCloser, error) {
 	return d.fs.Open(path.Join("data", d.group.Path(), d.name+".in"))
 }
 
+func (d TestData) InputSize() int64 {
+	return d.inputSize
+}
+
 func (d TestData) Answer() (io.ReadCloser, error) {
 	return d.fs.Open(path.Join("data", d.group.Path(), d.name+".ans"))
+}
+
+func (d TestData) AnswerSize() int64 {
+	return d.answerSize
 }
 
 func (d TestData) readText(name string) (string, error) {

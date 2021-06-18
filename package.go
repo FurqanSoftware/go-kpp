@@ -76,6 +76,16 @@ func (p *Package) TestData() ([]TestData, error) {
 			group: g,
 			name:  strings.TrimSuffix(path.Base(name), ".in"),
 		}
+		fi, err := fs.Stat(p.fs, path.Join("data", g.Path(), test.name+".in"))
+		if err != nil {
+			return err
+		}
+		test.inputSize = fi.Size()
+		fi, err = fs.Stat(p.fs, path.Join("data", g.Path(), test.name+".ans"))
+		if err != nil {
+			return err
+		}
+		test.answerSize = fi.Size()
 		for _, ext := range []string{".png", ".jpg", ".jpeg", ".svg"} {
 			_, err := fs.Stat(p.fs, path.Join("data", g.Path(), test.name+ext))
 			if err == nil {
