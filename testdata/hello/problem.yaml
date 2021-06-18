@@ -1,0 +1,17 @@
+name: Hello
+source: Criterion Round 0xFFFF
+author: John Doe
+license: cc by-sa  
+rights_owner: Toph
+
+limits:
+  time_multiplier: 3
+  time_safety_margin: 2
+  memory: 512  
+  output: 16 
+  compilation_time: 10
+  validation_time: 1
+  validation_memory: 512
+  validation_output: 4
+
+validation: space_change_sensitive float_absolute_tolerance 1e-6
