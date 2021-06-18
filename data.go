@@ -10,9 +10,13 @@ type TestData struct {
 	fs fs.FS
 
 	group *TestGroup
-	base  string
+	name  string
 
 	illusExt string
+}
+
+func (d TestData) Name() string {
+	return d.name
 }
 
 func (d TestData) Group() string {
@@ -20,11 +24,11 @@ func (d TestData) Group() string {
 }
 
 func (d TestData) Input() (io.ReadCloser, error) {
-	return d.fs.Open(path.Join("data", d.group.Path(), d.base+".in"))
+	return d.fs.Open(path.Join("data", d.group.Path(), d.name+".in"))
 }
 
 func (d TestData) Answer() (io.ReadCloser, error) {
-	return d.fs.Open(path.Join("data", d.group.Path(), d.base+".ans"))
+	return d.fs.Open(path.Join("data", d.group.Path(), d.name+".ans"))
 }
 
 func (d TestData) readText(name string) (string, error) {
@@ -38,18 +42,18 @@ func (d TestData) readText(name string) (string, error) {
 }
 
 func (d TestData) Hint() (string, error) {
-	return d.readText(d.base + ".hint")
+	return d.readText(d.name + ".hint")
 }
 
 func (d TestData) Description() (string, error) {
-	return d.readText(d.base + ".desc")
+	return d.readText(d.name + ".desc")
 }
 
 func (d TestData) Illustration() (io.ReadCloser, string, error) {
 	if d.illusExt == "" {
 		return nil, "", nil
 	}
-	f, err := d.fs.Open(path.Join("data", d.group.Path(), d.base+"."+d.illusExt))
+	f, err := d.fs.Open(path.Join("data", d.group.Path(), d.name+"."+d.illusExt))
 	return f, d.illusExt, err
 }
 

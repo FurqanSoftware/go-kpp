@@ -74,10 +74,10 @@ func (p *Package) TestData() ([]TestData, error) {
 		test := TestData{
 			fs:    p.fs,
 			group: g,
-			base:  strings.TrimSuffix(path.Base(name), ".in"),
+			name:  strings.TrimSuffix(path.Base(name), ".in"),
 		}
 		for _, ext := range []string{".png", ".jpg", ".jpeg", ".svg"} {
-			_, err := fs.Stat(p.fs, path.Join("data", g.Path(), test.base+ext))
+			_, err := fs.Stat(p.fs, path.Join("data", g.Path(), test.name+ext))
 			if err == nil {
 				test.illusExt = ext
 				break
