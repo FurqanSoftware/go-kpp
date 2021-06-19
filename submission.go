@@ -13,9 +13,12 @@ type Submission struct {
 	name string
 }
 
-// Type returns tex, md, or pdf.
 func (s Submission) Type() string {
 	return s.typ
+}
+
+func (s Submission) Name() string {
+	return s.name
 }
 
 func (s Submission) Source() (io.ReadCloser, error) {
