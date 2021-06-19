@@ -13,7 +13,7 @@ type Statement struct {
 	name string
 
 	language string
-	typ      string
+	fileType string
 }
 
 func newStatement(fs fs.FS, name string) (stmt Statement) {
@@ -24,7 +24,7 @@ func newStatement(fs fs.FS, name string) (stmt Statement) {
 	if len(parts) == 3 {
 		stmt.language = parts[1]
 	}
-	stmt.typ = parts[len(parts)-1]
+	stmt.fileType = parts[len(parts)-1]
 	return
 }
 
@@ -32,9 +32,9 @@ func (s Statement) Language() string {
 	return s.language
 }
 
-// Type returns tex, md, or pdf.
-func (s Statement) Type() string {
-	return s.typ
+// FileType returns tex, md, or pdf.
+func (s Statement) FileType() string {
+	return s.fileType
 }
 
 func (s Statement) Content() (io.ReadCloser, error) {
