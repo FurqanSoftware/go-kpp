@@ -100,6 +100,31 @@ func (p *Package) TestData() ([]TestData, error) {
 	return tests, err
 }
 
+func (p *Package) Submissions() ([]Submission, error) {
+	td, err := fs.ReadDir(p.fs, "submissions")
+	if err != nil {
+		return nil, err
+	}
+	subms := []Submission{}
+	for _, te := range td {
+		sd, err := fs.ReadDir(p.fs, path.Join("submissions", te.Name()))
+		if err != nil {
+			return nil, err
+		}
+		for _, se := range sd {
+			if se.IsDir() {
+				// XXX(hjr265): We are going to skip directories for now.
+				continue
+			}
+			subm := Submission{}
+			subm.typ = te.Name()
+			subm.name = se.Name()
+			subms = append(subms, subm)
+		}
+	}
+	return subms, nil
+}
+
 func (p *Package) readMetadata() error {
 	f, err := p.fs.Open("problem.yaml")
 	if err != nil {
