@@ -116,9 +116,11 @@ func (p *Package) Submissions() ([]Submission, error) {
 				// XXX(hjr265): We are going to skip directories for now.
 				continue
 			}
-			subm := Submission{}
-			subm.typ = te.Name()
-			subm.name = se.Name()
+			subm := Submission{
+				fs:   p.fs,
+				typ:  te.Name(),
+				name: se.Name(),
+			}
 			subms = append(subms, subm)
 		}
 	}
