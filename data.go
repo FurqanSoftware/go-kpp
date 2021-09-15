@@ -1,6 +1,7 @@
 package kpp
 
 import (
+	"errors"
 	"io"
 	"io/fs"
 	"path"
@@ -43,6 +44,9 @@ func (d TestData) AnswerSize() int64 {
 
 func (d TestData) readText(name string) (string, error) {
 	f, err := d.fs.Open(path.Join("data", d.group.Path(), name))
+	if errors.Is(err, fs.ErrNotExist) {
+		return "", nil
+	}
 	if err != nil {
 		return "", err
 	}
